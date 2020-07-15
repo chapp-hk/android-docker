@@ -26,6 +26,7 @@ RUN apt-get -qq update && \
         libqt5widgets5 \
         libqt5svg5 \
         locales \
+        build-essential \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Set locale
@@ -62,5 +63,15 @@ RUN cd rclone-*-linux-amd64 && \
     chown root:root /usr/bin/rclone && \
     chmod 755 /usr/bin/rclone
 
-# Registery Tag Name. Change it For each commit.
-CMD echo "3.0"
+# Install nodejs
+RUN curl -sL https://deb.nodesource.com/setup_current.x | bash -
+RUN apt-get install -y nodejs
+
+# Install Conventional Commit
+RUN npm install -g conventional-changelog-cli
+RUN npm install -g standard-changelog
+RUN npm install --save-dev @commitlint/cli
+
+# Cleanup
+RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y
+
