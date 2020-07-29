@@ -70,7 +70,7 @@ RUN apt-get install -y nodejs
 # Install Conventional Commit
 RUN npm install -g conventional-changelog-cli
 RUN npm install -g standard-changelog
-RUN npm install --save-dev @commitlint/cli
+RUN npm install -g @commitlint/cli @commitlint/config-conventional
 
 # Cleanup
 RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y
